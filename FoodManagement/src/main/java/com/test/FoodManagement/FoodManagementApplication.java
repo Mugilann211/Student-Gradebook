@@ -8,6 +8,11 @@ public class FoodManagementApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FoodManagementApplication.class, args);
+		//comou
+		//duke
+		//fiesta
+		//roja
+		//kena
 	}
 
 }
