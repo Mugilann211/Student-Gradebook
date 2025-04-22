@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Select from "react-select";
 import api from "../services/api";
 
 export default function Grades() {
@@ -65,31 +66,32 @@ export default function Grades() {
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Grades Management</h1>
       <form onSubmit={handleSubmit} className="space-y-4 mb-6">
-        <select
-          className="input"
-          value={form.studentId}
-          onChange={(e) => setForm({ ...form, studentId: e.target.value })}
-        >
-          <option value="">Select Student</option>
-          {students.map((s) => (
-            <option key={s.id} value={s.id}>
-              {s.name}
-            </option>
-          ))}
-        </select>
 
-        <select
+        {/* Student Dropdown */}
+        <Select
           className="input"
-          value={form.subjectId}
-          onChange={(e) => setForm({ ...form, subjectId: e.target.value })}
-        >
-          <option value="">Select Subject</option>
-          {subjects.map((sub) => (
-            <option key={sub.id} value={sub.id}>
-              {sub.name}
-            </option>
-          ))}
-        </select>
+          options={students.map((s) => ({ value: s.id, label: s.name }))}
+          placeholder="Select Student"
+          value={students
+            .map((s) => ({ value: s.id, label: s.name }))
+            .find((opt) => opt.value === form.studentId) || null}
+          onChange={(selected) =>
+            setForm({ ...form, studentId: selected ? selected.value : "" })
+          }
+        />
+
+        {/* Subject Dropdown */}
+        <Select
+          className="input"
+          options={subjects.map((s) => ({ value: s.id, label: s.name }))}
+          placeholder="Select Subject"
+          value={subjects
+            .map((s) => ({ value: s.id, label: s.name }))
+            .find((opt) => opt.value === form.subjectId) || null}
+          onChange={(selected) =>
+            setForm({ ...form, subjectId: selected ? selected.value : "" })
+          }
+        />
 
         <input
           type="number"
@@ -99,7 +101,7 @@ export default function Grades() {
           onChange={(e) => setForm({ ...form, score: e.target.value })}
         />
 
-        <button className="btn bg-blue-600 text-white">
+        <button className="btn bg-blue-600 text-white p-1 rounded-sm">
           {editId ? "Update" : "Add"} Grade
         </button>
       </form>

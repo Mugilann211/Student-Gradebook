@@ -23,7 +23,7 @@ export function LoginForm({ className, ...props }) {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8081/api/auth/register", {
+      const response = await axios.post("http://localhost:8081/api/auth/login", {
         email,
         password,
       });
@@ -32,7 +32,7 @@ export function LoginForm({ className, ...props }) {
       localStorage.setItem("token", token);
 
       toast.success("Login successful!");
-      navigate("/dashboard"); // Change this to your actual route
+      navigate("/dashboard");
     } catch (error) {
       toast.error("Login failed. Check your credentials.");
       console.error("Login error:", error);

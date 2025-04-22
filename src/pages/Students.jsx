@@ -3,7 +3,13 @@ import api from "../services/api";
 
 export default function Students() {
   const [students, setStudents] = useState([]);
-  const [form, setForm] = useState({ name: "", email: "" });
+  const [form, setForm] = useState({
+    name: "",
+    roll_no: "",
+    class: "",
+    dob: "",
+    teacher_id: ""
+  });
   const [editId, setEditId] = useState(null);
 
   const fetchStudents = async () => {
@@ -20,6 +26,8 @@ export default function Students() {
   }, []);
 
   const handleSubmit = async (e) => {
+    console.log("hi");
+    
     e.preventDefault();
     try {
       if (editId) {
@@ -27,7 +35,13 @@ export default function Students() {
       } else {
         await api.post("/students", form);
       }
-      setForm({ name: "", email: "" });
+      setForm({
+        name: "",
+        roll_no: "",
+        class: "",
+        dob: "",
+        teacher_id: ""
+      });
       setEditId(null);
       fetchStudents();
     } catch (err) {
@@ -36,7 +50,13 @@ export default function Students() {
   };
 
   const handleEdit = (student) => {
-    setForm({ name: student.name, email: student.email });
+    setForm({
+      name: student.name,
+      roll_no: student.roll_no,
+      class: student.class,
+      dob: student.dob,
+      teacher_id: student.teacher_id
+    });
     setEditId(student.id);
   };
 
@@ -60,22 +80,44 @@ export default function Students() {
           onChange={(e) => setForm({ ...form, name: e.target.value })}
         />
         <input
-          placeholder="Email"
+          placeholder="Roll No"
           className="input"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
+          value={form.roll_no}
+          onChange={(e) => setForm({ ...form, roll_no: e.target.value })}
         />
-        <button className="btn bg-blue-600 text-white">
+        <input
+          placeholder="Class"
+          className="input"
+          value={form.class}
+          onChange={(e) => setForm({ ...form, class: e.target.value })}
+        />
+        <input
+          type="date"
+          placeholder="Date of Birth"
+          className="input"
+          value={form.dob}
+          onChange={(e) => setForm({ ...form, dob: e.target.value })}
+        />
+        <input
+          placeholder="Teacher ID"
+          className="input"
+          value={form.teacher_id}
+          onChange={(e) => setForm({ ...form, teacher_id: e.target.value })}
+        />
+        <button className="btn bg-blue-600 text-white p-2 rounded-sm">
           {editId ? "Update" : "Add"} Student
         </button>
       </form>
 
       <table className="w-full table-auto border">
         <thead>
-          <tr className="bg-gray-200">
+          <tr className="bg-gray-200 text-center">
             <th className="p-2 border">#</th>
             <th className="p-2 border">Name</th>
-            <th className="p-2 border">Email</th>
+            <th className="p-2 border">Roll No</th>
+            <th className="p-2 border">Class</th>
+            <th className="p-2 border">DOB</th>
+            <th className="p-2 border">Teacher ID</th>
             <th className="p-2 border">Actions</th>
           </tr>
         </thead>
@@ -84,7 +126,10 @@ export default function Students() {
             <tr key={student.id} className="text-center">
               <td className="p-2 border">{i + 1}</td>
               <td className="p-2 border">{student.name}</td>
-              <td className="p-2 border">{student.email}</td>
+              <td className="p-2 border">{student.roll_no}</td>
+              <td className="p-2 border">{student.class}</td>
+              <td className="p-2 border">{student.dob}</td>
+              <td className="p-2 border">{student.teacher_id}</td>
               <td className="p-2 border space-x-2">
                 <button
                   className="btn bg-yellow-400"

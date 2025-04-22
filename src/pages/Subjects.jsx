@@ -3,7 +3,8 @@ import api from "../services/api";
 
 export default function Subjects() {
   const [subjects, setSubjects] = useState([]);
-  const [form, setForm] = useState({ name: "" });
+  const [teachers, setTeachers] = useState([]); // New state for teachers
+  const [form, setForm] = useState({ name: "", teacher_id: "" });
   const [editId, setEditId] = useState(null);
 
   const fetchSubjects = async () => {
@@ -15,8 +16,18 @@ export default function Subjects() {
     }
   };
 
+  const fetchTeachers = async () => {
+    try {
+      const res = await api.get("/teachers"); // Fetch teachers
+      setTeachers(res.data);
+    } catch (err) {
+      console.error("Failed to fetch teachers", err);
+    }
+  };
+
   useEffect(() => {
     fetchSubjects();
+    fetchTeachers(); // Fetch teachers when the component mounts
   }, []);
 
   const handleSubmit = async (e) => {
@@ -27,7 +38,7 @@ export default function Subjects() {
       } else {
         await api.post("/subjects", form);
       }
-      setForm({ name: "" });
+      setForm({ name: "", teacher_id: "" }); // Reset form
       setEditId(null);
       fetchSubjects();
     } catch (err) {
@@ -36,7 +47,7 @@ export default function Subjects() {
   };
 
   const handleEdit = (subject) => {
-    setForm({ name: subject.name });
+    setForm({ name: subject.name, teacher_id: subject.teacher_id }); // Include teacher_id in form
     setEditId(subject.id);
   };
 
@@ -59,7 +70,19 @@ export default function Subjects() {
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
         />
-        <button className="btn bg-blue-600 text-white">
+        <select
+          className="input"
+          value={form.teacher_id}
+          onChange={(e) => setForm({ ...form, teacher_id: e.target.value })}
+        >
+          <option value="">Select Teacher</option>
+          {teachers.map((teacher) => (
+            <option key={teacher.id} value={teacher.id}>
+              {teacher.name}
+            </option>
+          ))}
+        </select>
+        <button className="btn bg-blue-600 text-white p-1 ml-4 rounded-sm">
           {editId ? "Update" : "Add"} Subject
         </button>
       </form>
@@ -69,6 +92,7 @@ export default function Subjects() {
           <tr className="bg-gray-200">
             <th className="p-2 border">#</th>
             <th className="p-2 border">Subject Name</th>
+            <th className="p-2 border">Teacher</th>
             <th className="p-2 border">Actions</th>
           </tr>
         </thead>
@@ -77,6 +101,7 @@ export default function Subjects() {
             <tr key={subject.id} className="text-center">
               <td className="p-2 border">{i + 1}</td>
               <td className="p-2 border">{subject.name}</td>
+              <td className="p-2 border">{subject.teacher.name}</td> {/* Assuming teacher data is nested */}
               <td className="p-2 border space-x-2">
                 <button
                   className="btn bg-yellow-400"
