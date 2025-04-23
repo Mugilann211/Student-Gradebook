@@ -19,7 +19,7 @@ export default function Register({ className, ...props }) {
     email: "",
     password: "",
     name: "",
-    role: "USER", // Default: Student -> USER
+    role: "USER", 
   });
 
   const navigate = useNavigate();

@@ -71,7 +71,7 @@ export default function Subjects() {
           onChange={(e) => setForm({ ...form, name: e.target.value })}
         />
         <select
-          className="input"
+          className="input ml-4"
           value={form.teacher_id}
           onChange={(e) => setForm({ ...form, teacher_id: e.target.value })}
         >
@@ -82,7 +82,7 @@ export default function Subjects() {
             </option>
           ))}
         </select>
-        <button className="btn bg-blue-600 text-white p-1 ml-4 rounded-sm">
+        <button className="btn bg-blue-600 text-white p-1 ml-6 rounded-sm">
           {editId ? "Update" : "Add"} Subject
         </button>
       </form>
@@ -104,7 +104,7 @@ export default function Subjects() {
               <td className="p-2 border">{subject.teacher.name}</td> {/* Assuming teacher data is nested */}
               <td className="p-2 border space-x-2">
                 <button
-                  className="btn bg-yellow-400"
+                  className="btn bg-yellow-400 "
                   onClick={() => handleEdit(subject)}
                 >
                   Edit

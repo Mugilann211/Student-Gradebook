@@ -66,28 +66,29 @@ export default function Grades() {
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Grades Management</h1>
       <form onSubmit={handleSubmit} className="space-y-4 mb-6">
-
-        {/* Student Dropdown */}
         <Select
           className="input"
           options={students.map((s) => ({ value: s.id, label: s.name }))}
           placeholder="Select Student"
-          value={students
-            .map((s) => ({ value: s.id, label: s.name }))
-            .find((opt) => opt.value === form.studentId) || null}
+          value={
+            students
+              .map((s) => ({ value: s.id, label: s.name }))
+              .find((opt) => opt.value === form.studentId) || null
+          }
           onChange={(selected) =>
             setForm({ ...form, studentId: selected ? selected.value : "" })
           }
         />
 
-        {/* Subject Dropdown */}
         <Select
           className="input"
           options={subjects.map((s) => ({ value: s.id, label: s.name }))}
           placeholder="Select Subject"
-          value={subjects
-            .map((s) => ({ value: s.id, label: s.name }))
-            .find((opt) => opt.value === form.subjectId) || null}
+          value={
+            subjects
+              .map((s) => ({ value: s.id, label: s.name }))
+              .find((opt) => opt.value === form.subjectId) || null
+          }
           onChange={(selected) =>
             setForm({ ...form, subjectId: selected ? selected.value : "" })
           }
