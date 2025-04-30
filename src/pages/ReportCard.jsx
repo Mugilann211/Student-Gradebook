@@ -1,6 +1,5 @@
-import ReactToPrint from "react-to-print";
+import { ReactToPrint } from "react-to-print";
 console.log("ReactToPrint:", ReactToPrint); 
-
 import { useRef, useState, useEffect } from "react";
 import api from "../services/api"; 
 

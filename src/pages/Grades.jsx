@@ -102,7 +102,7 @@ export default function Grades() {
           onChange={(e) => setForm({ ...form, score: e.target.value })}
         />
 
-        <button className="btn bg-blue-600 text-white p-1 rounded-sm">
+        <button className="btn bg-blue-600 text-white p-1 rounded-sm ml-4">
           {editId ? "Update" : "Add"} Grade
         </button>
       </form>

@@ -6,7 +6,7 @@ export default function Students() {
   const [form, setForm] = useState({
     name: "",
     rollNo: "",
-    class_Name: "",
+    studentClass: "",
     dob: "",
     teacher_id: "",
   });
@@ -25,30 +25,6 @@ export default function Students() {
     fetchStudents();
   }, []);
 
-  // const handleSubmit = async (e) => {
-  //   console.log("hi");
-
-  //   e.preventDefault();
-  //   try {
-  //     if (editId) {
-  //       await api.put(`/students/${editId}`, form);
-  //     } else {
-  //       await api.post("/students", form);
-  //     }
-  //     setForm({
-  //       name: "",
-  //       rollNo: "",
-  //       class_Name: "",
-  //       dob: "",
-  //       teacher_id: "",
-  //     });
-  //     setEditId(null);
-  //     fetchStudents();
-  //   } catch (err) {
-  //     console.error("Failed to save student", err);
-  //   }
-  // };
-  // Converts yyyy-MM-dd → dd-MM-yyyy
   const convertToBackendDob = (dob) => {
     const [year, month, day] = dob.split("-");
     return `${day}-${month}-${year}`;
@@ -59,7 +35,7 @@ export default function Students() {
     try {
       const studentData = {
         ...form,
-        dob: convertToBackendDob(form.dob), 
+        dob: convertToBackendDob(form.dob),
       };
 
       if (editId) {
@@ -71,7 +47,7 @@ export default function Students() {
       setForm({
         name: "",
         rollNo: "",
-        class_Name: "",
+        studentClass: "",
         dob: "",
         teacher_id: "",
       });
@@ -84,19 +60,21 @@ export default function Students() {
 
   const handleEdit = (student) => {
     setForm({
-      name: student.name,
-      rollNo: student.rollNo,
-      class_Name: student.class_Name,
-      dob: convertToBackendDob(student.dob),
-      teacher_id: student.teacher_id,
+      name: student.name || "",
+      rollNo: student.rollNo || "",
+      studentClass: student.studentClass || "",
+      dob: student.dob ? convertToBackendDob(student.dob) : "",
+      teacher_id: student.teacher?.id?.toString() || "",
     });
     setEditId(student.id);
   };
 
   const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this student?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this student?"
+    );
     if (!confirmDelete) return;
-  
+
     try {
       await api.delete(`/students/${id}`);
       fetchStudents();
@@ -104,7 +82,6 @@ export default function Students() {
       console.error("Failed to delete student", err);
     }
   };
-  
 
   return (
     <div className="p-6">
@@ -115,19 +92,21 @@ export default function Students() {
           className="input "
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
+          required
         />
         <input
           placeholder="Roll No"
           className="input ml-3"
           value={form.rollNo}
           onChange={(e) => setForm({ ...form, rollNo: e.target.value })}
+          required
         />
         <input
           type="number"
           placeholder="Class (1 to 12th)"
           className="input ml-3"
-          value={form.class_Name}
-          onChange={(e) => setForm({ ...form, class_Name: e.target.value })}
+          value={form.studentClass}
+          onChange={(e) => setForm({ ...form, studentClass: e.target.value })}
           min={1}
           max={12}
           required
@@ -139,6 +118,7 @@ export default function Students() {
           className="input ml-4"
           value={form.dob}
           onChange={(e) => setForm({ ...form, dob: e.target.value })}
+          required
         />
         <input
           placeholder="Teacher ID"
@@ -169,9 +149,9 @@ export default function Students() {
               <td className="p-2 border">{i + 1}</td>
               <td className="p-2 border">{student.name}</td>
               <td className="p-2 border">{student.rollNo}</td>
-              <td className="p-2 border">{student.class_Name}</td>
+              <td className="p-2 border">{student.studentClass}</td>
               <td className="p-2 border">{student.dob}</td>
-              <td className="p-2 border">{student.teacher_id}</td>
+              <td className="p-2 border">{student.teacher?.id}</td>
               <td className="p-2 border space-x-2">
                 <button
                   className="btn bg-yellow-400 pr-2 pl-2 pt-1 pb-1 rounded-sm"

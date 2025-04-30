@@ -15,17 +15,12 @@ import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 
 export default function Register({ className, ...props }) {
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-    name: "",
-    role: "USER", 
-  });
-
+  const [form, setForm] = useState({ email: "", password: "", name: "" });
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       await api.post("/auth/register", form);
       toast.success("Account created successfully!");
@@ -35,6 +30,7 @@ export default function Register({ className, ...props }) {
       console.error("Register Error:", error);
     }
   };
+  
 
   return (
     <div className={cn("flex flex-col gap-6 mt-[100px]", className)} {...props}>
@@ -76,19 +72,6 @@ export default function Register({ className, ...props }) {
                 value={form.password}
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
               />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="role">Role</Label>
-              <select
-                id="role"
-                className="input border rounded px-3 py-2"
-                value={form.role}
-                onChange={(e) => setForm({ ...form, role: e.target.value })}
-                required
-              >
-                <option value="USER">Student</option>
-                <option value="ADMIN">Teacher</option>
-              </select>
             </div>
             <Button type="submit" className="w-full">
               Register

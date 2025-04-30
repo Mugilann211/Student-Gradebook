@@ -5,7 +5,7 @@ import Subjects from "./pages/Subjects";
 import Grades from "./pages/Grades";
 import ReportCard from "./pages/ReportCard";
 import Navbar from "./components/Navbar";
-// import PrivateRoute from "./components/ProtectedRoute";
+import PrivateRoute from "./components/ProtectedRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Dashboard from "./pages/Dashboard";
@@ -19,60 +19,60 @@ export default function App() {
         <Route
           path="/dashboard"
           element={
-            // <PrivateRoute>
+            <PrivateRoute>
               <>
                 <Navbar />
                 <Dashboard />
               </>
-            // </PrivateRoute>
+              </PrivateRoute> 
           }
         />
 
         <Route
           path="/students"
           element={
-            // <PrivateRoute>
+            <PrivateRoute>
               <>
                 <Navbar />
                 <Students />
               </>
-            // </PrivateRoute>
+              </PrivateRoute> 
           }
         />
 
         <Route
           path="/subjects"
           element={
-            // <PrivateRoute>
+            <PrivateRoute>
               <>
                 <Navbar />
                 <Subjects />
               </>
-            // </PrivateRoute>
+             </PrivateRoute> 
           }
         />
 
         <Route
           path="/grades"
           element={
-            // <PrivateRoute>
+            <PrivateRoute>
               <>
                 <Navbar />
                 <Grades />
               </>
-            // </PrivateRoute>
+              </PrivateRoute> 
           }
         />
 
         <Route
           path="/report"
           element={
-            // <PrivateRoute>
+            <PrivateRoute>
               <>
                 <Navbar />
                 <ReportCard />
               </>
-            // </PrivateRoute>
+             </PrivateRoute> 
           }
         />
 
