@@ -120,12 +120,12 @@ export default function Students() {
           onChange={(e) => setForm({ ...form, dob: e.target.value })}
           required
         />
-        <input
+        {/* <input
           placeholder="Teacher ID"
           className="input ml-4"
           value={form.teacher_id}
           onChange={(e) => setForm({ ...form, teacher_id: e.target.value })}
-        />
+        /> */}
         <button className="btn bg-blue-600 text-white p-2 rounded-sm ml-4">
           {editId ? "Update" : "Add"} Student
         </button>
